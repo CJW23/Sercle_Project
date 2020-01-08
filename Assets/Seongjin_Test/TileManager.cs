@@ -89,6 +89,7 @@ public class TileManager : MonoBehaviour
 
                 // 타일 관리 리스트에 등록
                 tiles[i].Add(go.GetComponent<Tile>());
+                tiles[i][j].TilePos = new Vector2(i, j);
             }
         }
     }
@@ -239,11 +240,26 @@ public class TileManager : MonoBehaviour
             Debug.DrawLine(Vector3.forward * posY + Vector3.right * posX, Vector3.forward * (posY  + TILE_OFFSET) + Vector3.right * (posX + TILE_OFFSET));
             Debug.DrawLine(Vector3.forward * (posY + TILE_OFFSET) + Vector3.right * posX, Vector3.forward * posY + Vector3.right * (posX + TILE_OFFSET));
 
+            // GameManager에게 Selected unit 정보를 넘기자.
             if (Input.GetMouseButtonDown(0))
             {
                 // TestCode
-                Debug.Log(selectionX/5 + " " + selectionY/5);
-                DoEffect(selectionX / 5, selectionY / 5, 1);
+                // Debug.Log(selectionX/5 + " " + selectionY/5);
+                // DoEffect(selectionX / 5, selectionY / 5, 1);
+                // SelectionX/5는 0~7 scale.
+
+                /*
+                if (GameManager.Phase == Phase.ChooseUnit)
+                {
+                    GameManager.curSelectedUnit = tiles[selectionX][selectionY];
+                    return;
+                }
+                if(GameManager.Phase == Phase.ChooseTarget)
+                {
+                    GameManager.curSelectedTarget = tiles[selectionX][selectionY];
+                }
+                */
+
             }
             
         }

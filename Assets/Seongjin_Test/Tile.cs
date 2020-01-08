@@ -22,7 +22,7 @@ public class Tile : MonoBehaviour
 
     public void Effect()
     {
-        Debug.Log(transform.position + " Effect 시작");
+        Debug.Log(TilePos + " Effect 시작");
     }
     // Start is called before the first frame update
     void Start()
