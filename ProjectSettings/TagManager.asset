@@ -30,7 +30,11 @@ TagManager:
   - 
   - 
   - 
+<<<<<<< HEAD
   - ChessBoard
+=======
+  - 
+>>>>>>> parent of f244891... 1. Tilemanager, Tile 마우스 클릭 샘플코드 작성
   - 
   - 
   - 
