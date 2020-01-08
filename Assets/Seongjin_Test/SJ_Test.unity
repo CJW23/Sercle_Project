@@ -120,7 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
-<<<<<<< HEAD
 --- !u!1001 &125820306
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -178,8 +177,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9751ce6917e9a34fa65260bace8c38a, type: 3}
-=======
->>>>>>> parent of f244891... 1. Tilemanager, Tile 마우스 클릭 샘플코드 작성
 --- !u!4 &321986131 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6364037877662930145, guid: 3d2404de5def59d46b2ffae867b63e28,
@@ -394,7 +391,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d2404de5def59d46b2ffae867b63e28, type: 3}
-<<<<<<< HEAD
 --- !u!1001 &560018119
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -452,8 +448,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9751ce6917e9a34fa65260bace8c38a, type: 3}
-=======
->>>>>>> parent of f244891... 1. Tilemanager, Tile 마우스 클릭 샘플코드 작성
 --- !u!1 &573538977
 GameObject:
   m_ObjectHideFlags: 0
@@ -597,7 +591,6 @@ MonoBehaviour:
   m_DynamicPixelsPerUnit: 1
 --- !u!223 &656395438
 Canvas:
-<<<<<<< HEAD
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -619,37 +612,11 @@ Canvas:
   m_TargetDisplay: 0
 --- !u!224 &656395439
 RectTransform:
-=======
->>>>>>> parent of f244891... 1. Tilemanager, Tile 마우스 클릭 샘플코드 작성
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 656395435}
-<<<<<<< HEAD
-=======
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
---- !u!224 &656395439
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 656395435}
->>>>>>> parent of f244891... 1. Tilemanager, Tile 마우스 클릭 샘플코드 작성
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
@@ -782,7 +749,6 @@ BoxCollider:
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &696015637
 MeshFilter:
-<<<<<<< HEAD
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -791,24 +757,11 @@ MeshFilter:
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &696015639
 Transform:
-=======
->>>>>>> parent of f244891... 1. Tilemanager, Tile 마우스 클릭 샘플코드 작성
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 696015635}
-<<<<<<< HEAD
-=======
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &696015639
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696015635}
->>>>>>> parent of f244891... 1. Tilemanager, Tile 마우스 클릭 샘플코드 작성
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 20, y: 0, z: 20}
   m_LocalScale: {x: 4, y: 1, z: 4}
@@ -816,7 +769,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
 --- !u!1001 &705462674
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -874,8 +826,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9751ce6917e9a34fa65260bace8c38a, type: 3}
-=======
->>>>>>> parent of f244891... 1. Tilemanager, Tile 마우스 클릭 샘플코드 작성
 --- !u!1 &735250011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1077,7 +1027,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 535126409}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
 --- !u!1001 &917387849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1135,8 +1084,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9751ce6917e9a34fa65260bace8c38a, type: 3}
-=======
->>>>>>> parent of f244891... 1. Tilemanager, Tile 마우스 클릭 샘플코드 작성
 --- !u!1001 &1092223554
 PrefabInstance:
   m_ObjectHideFlags: 0
