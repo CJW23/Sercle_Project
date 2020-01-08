@@ -69,15 +69,14 @@ public class UIManager : MonoBehaviour
         Actions actions = nowUnit.Actions(num);
         List<Vector2> actionRange = actions.GetActionRange();
 
-        ShowExpectation(num, nowUnit);
         foreach (Vector2 vector2 in actionRange)
         {
             Debug.Log(vector2);
         }
     }
 
-    public void ShowExpectation(int actionNum, Unit targetUnit)
+    public void ShowAttackExpectation(int actionNum, Unit targetUnit)
     {
-        nowUnit.Expectation(actionNum, targetUnit);
+        nowUnit.AttackExpectation(actionNum, targetUnit);
     }
 }

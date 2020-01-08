@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum UnitType { Pawn, Knigh, Bishop, Rook, Queen, King }
+public enum UnitType { Pawn, Knight, Bishop, Rook, Queen, King }
 
 public class Unit : MonoBehaviour
 {
@@ -16,7 +16,7 @@ public class Unit : MonoBehaviour
     public BasicStatus Stat { get { return stat; } }
     public Actions Actions(int num) { return myActions[num]; }
 
-    public void Expectation(int actionNum, Unit targetUnit)
+    public void AttackExpectation(int actionNum, Unit targetUnit)
     {
         int damage = (int)(myActions[actionNum].Damage * (1 - (float)targetUnit.Stat.Defense / 100));
         int probability = stat.Critical - targetUnit.stat.Dodge;
