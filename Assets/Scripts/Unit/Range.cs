@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public enum Direction { Self, Front, Sun, Straight, Diagonal, All }
+public enum Direction { Self, Front, Sun, Straight, Diagonal, FrontDiagonal, All }
 public enum Area { Edge, All, AllExceptSelf };
 
 [System.Serializable]
@@ -37,6 +37,9 @@ public class Range
                 break;
             case Direction.Diagonal:
                 dirVecs = new List<Vector2> { new Vector2(1, 1), new Vector2(1, -1), new Vector2(-1, 1), new Vector2(-1, -1) };
+                break;
+            case Direction.FrontDiagonal:
+                dirVecs = new List<Vector2> { new Vector2(1, 1), new Vector2(-1, 1) };
                 break;
             case Direction.All:
                 dirVecs = new List<Vector2> { new Vector2(0, 1), new Vector2(1, 0), new Vector2(0, -1), new Vector2(-1, 0),

@@ -16,8 +16,18 @@ public class Unit : MonoBehaviour
     public BasicStatus Stat { get { return stat; } }
     public Actions Actions(int num) { return myActions[num]; }
 
-    public void ShowActionDescription(int actionNum)
+    public void Expectation(int actionNum, Unit targetUnit)
     {
+        int damage = (int)(myActions[actionNum].Damage * (1 - (float)targetUnit.Stat.Defense / 100));
+        int probability = stat.Critical - targetUnit.stat.Dodge;
 
+        int criticalProb = 0;
+        int dodgeProb = 0;
+        if (probability > 0) criticalProb = probability;
+        else if (probability < 0) dodgeProb = probability;
+
+        Debug.Log("예상 데미지 : " + damage);
+        Debug.Log("크리티컬 확률 : " + criticalProb + "%");
+        Debug.Log("회피 확률 : " + dodgeProb + "%");
     }
 }
