@@ -35,22 +35,11 @@ public class UIManager : MonoBehaviour
         actionPanel.SetActive(false);
     }
 
-    private void Update()
-    {
-        if (nowUnit != null)
-        {
-            ShowBasicInfo(nowUnit);
-        }
-        else
-        {
-            basicInfoPanel.SetActive(false);
-        }
-    }
-
-    private void ShowBasicInfo(Unit unit)
+    public void ShowBasicInfo(Tile tile)
     {
         basicInfoPanel.SetActive(true);
 
+        Unit unit = tile.Unit;
         unitName.text = unit.UnitType.ToString();
         basicStatText.text = unit.Stat.Health + "/" + unit.Stat.Defense + "/" + unit.Stat.Critical + "/" + unit.Stat.Dodge;
     }
@@ -67,11 +56,16 @@ public class UIManager : MonoBehaviour
     public void SelectAction(int num)
     {
         Actions actions = nowUnit.Actions(num);
-        List<Vector2> actionRange = actions.GetActionRange();
 
-        foreach (Vector2 vector2 in actionRange)
+        if (GameManager.instance.TryAction(actions) == false)
         {
-            Debug.Log(vector2);
+            // 행동력이 부족해서 액션을 수행할 수 없을 경우
+        }
+        else
+        {
+            List<Vector2> actionRange = actions.GetActionRange();
+
+            // actionRange와 actionType을 타일 매니저에게 넘겨주면 됨.
         }
     }
 

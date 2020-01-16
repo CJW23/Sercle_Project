@@ -16,6 +16,11 @@ public class Unit : MonoBehaviour
     public BasicStatus Stat { get { return stat; } }
     public Actions Actions(int num) { return myActions[num]; }
 
+    public void ActivateAction(ActionType type)
+    {
+        // type에 해당하는 액션 시작
+    }
+
     public void AttackExpectation(int actionNum, Unit targetUnit)
     {
         int damage = (int)(myActions[actionNum].Damage * (1 - (float)targetUnit.Stat.Defense / 100));
