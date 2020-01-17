@@ -1,13 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    [Tooltip("초당 CP 증가량")]
+    [SerializeField] private float cps;
+    [SerializeField] private float myCP;
 
-    private Tile selectedTile;
-    private Tile targetTile;
+    [SerializeField] private Character curCharacter;
+    public Character CurCharacter { set { curCharacter = value; } }
+
+    public static GameManager instance;
 
     private void Awake()
     {
@@ -15,24 +20,47 @@ public class GameManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void AssignSelectedTile(Tile selected)
+    private void Start()
     {
-        selectedTile = selected;
-        UIManager.instance.ShowBasicInfo(selectedTile);
+        myCP = 50;
     }
 
-    public void AssignTargetTile(Tile target)
+    private void Update()
     {
-        targetTile = target;
-
-        //target.unitInfo.
+        ClickToMove();
+        Upgrade();
+        
     }
 
-    public bool TryAction(Actions actions)
+    private void FixedUpdate()
     {
-        // 액션을 수행할 수 있는 행동력이 있는지 계산
-        // 행동력이 부족하다면 return false;
-        // 행동력이 충분하다면 행동력을 차감하고 return true;
-        return true;
+        myCP += cps * Time.fixedDeltaTime;
+    }
+
+    private void ClickToMove()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit;
+
+        if (curCharacter && Input.GetMouseButtonDown(1))
+        {
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                curCharacter.GetComponent<NavMeshAgent>().destination = hit.point;
+            }
+        }
+    }
+
+    private void Upgrade()
+    {
+        if (curCharacter == null) return;
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (myCP < 20) return;
+            curCharacter.status.ChangeStat(StatusType.ATK, 20);
+            myCP -= 20;
+        }
     }
 }
