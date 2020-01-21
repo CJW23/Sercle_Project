@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbc63ca6b8a0e6743bf634c69760190f, type: 3}
-  m_Name: Basic Attack
+  m_Name: Critical Shot
   m_EditorClassIdentifier: 
-  description: "\uAE30\uBCF8 \uACF5\uACA9"
-  targetRange: 5
-  targetType: 1
-  coolDown: 0.5
-  skillEffect: {fileID: 11400000, guid: 06e5451fbdaf13a409b4140de933d30d, type: 2}
-  isCooling: 0
+  description: "3.5*\uACF5\uACA9\uB825\uC73C\uB85C \uACF5\uACA9\uC744 \uAC00\uD569\uB2C8\uB2E4."
+  targetRange: 8
+  targetType: 2
+  coolDown: 3
+  skillEffect: {fileID: 11400000, guid: b87917a464b62e148bb7aaf6a91cefee, type: 2}
+  isCooling: 1

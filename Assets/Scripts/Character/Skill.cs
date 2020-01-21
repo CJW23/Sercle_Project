@@ -15,7 +15,12 @@ public class Skill : ScriptableObject
     public TargetType targetType;
     public float coolDown;
     public SkillEffect skillEffect;
-    public bool isCooling = false;
+    public bool isCooling;
+
+    private void Awake()
+    {
+        isCooling = false;
+    }
 
     public IEnumerator Activate()
     {
@@ -39,6 +44,7 @@ public class Skill : ScriptableObject
         }
 
         GameManager.instance.InputState = InputState.Normal;
+        caster.ShowSkillRnage(false);
 
         string log = "현재 지정된 타겟은 ";
         foreach (Character target in targets)
@@ -71,7 +77,7 @@ public class Skill : ScriptableObject
             case TargetType.Friend:
                 Debug.Log("타겟 찾는 중");
                 // 스킬의 범위를 보여준다.
-                
+                caster.ShowSkillRnage(true, targetRange);
 
                 // 마우스 클릭에 의한 캐릭터를 지정받는다.
                 Character target = GameManager.instance.ClickedCharacter();
@@ -82,7 +88,7 @@ public class Skill : ScriptableObject
             case TargetType.Enemy:
                 Debug.Log("타겟 찾는 중");
                 // 스킬의 범위를 보여준다.
-
+                caster.ShowSkillRnage(true, targetRange);
 
                 // 마우스 클릭에 의한 캐릭터를 지정받는다.
                 target = GameManager.instance.ClickedCharacter();

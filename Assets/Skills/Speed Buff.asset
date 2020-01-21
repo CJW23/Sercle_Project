@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbc63ca6b8a0e6743bf634c69760190f, type: 3}
-  m_Name: Basic Attack
+  m_Name: Speed Buff
   m_EditorClassIdentifier: 
-  description: "\uAE30\uBCF8 \uACF5\uACA9"
-  targetRange: 5
-  targetType: 1
-  coolDown: 0.5
-  skillEffect: {fileID: 11400000, guid: 06e5451fbdaf13a409b4140de933d30d, type: 2}
+  description: "0.5\uCD08 \uB3D9\uC548 \uC774\uB3D9\uC18D\uB3C4\uAC00 12 \uC99D\uAC00\uD569\uB2C8\uB2E4."
+  targetRange: 0
+  targetType: 0
+  coolDown: 5
+  skillEffect: {fileID: 11400000, guid: e7fd75c4d5f64f340b761856e347faf1, type: 2}
   isCooling: 0

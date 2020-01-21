@@ -10,12 +10,16 @@ public class Character : MonoBehaviour
     public Status status;
     public bool isFriend;
 
-    [SerializeField] private CharacterState state;
-    [SerializeField] private Character target = null;
-    [SerializeField] private float attackRange;
+    private CharacterState state;
+    private Character target = null;
     [SerializeField] private LayerMask contactLayer;
 
+    [Header("Skills")]
+    public Skill basicAttack;
     public List<Skill> skills;
+
+    [Header("Skill UI")]
+    [SerializeField] private CircleRenderer skillRangeCircle;
 
     private NavMeshAgent agent;
     private bool isAttacking = false;
@@ -47,7 +51,7 @@ public class Character : MonoBehaviour
     {
         target = null;
 
-        Collider[] colls = Physics.OverlapSphere(transform.position, attackRange, contactLayer);
+        Collider[] colls = Physics.OverlapSphere(transform.position, basicAttack.targetRange, contactLayer);
 
         float nearestDis = 9999999;
 
@@ -70,7 +74,7 @@ public class Character : MonoBehaviour
         isAttacking = true;
 
         // 게임 매니저에게 공격한다고 알려준다.
-        //GameManager.instance.AttackCharacter(this, target);
+        GameManager.instance.ApplySkill(target, basicAttack.skillEffect.GetEffectResult(this, target));
 
         yield return new WaitForSeconds(1f);
         isAttacking = false;
@@ -170,5 +174,18 @@ public class Character : MonoBehaviour
         yield return new WaitForSeconds(effect.duration);
 
         status.ChangeStat(effect.type, -effect.amount);
+    }
+
+    /// <summary>
+    /// 해당 스킬의 사거리를 표시해주는 함수.
+    /// </summary>
+    /// <param name="show">true면 표시, false면 표시하지 않는다.</param>
+    /// <param name="range">스킬의 사거리. 기본값은 0이다.</param>
+    public void ShowSkillRnage(bool show, float range = 0)
+    {
+        skillRangeCircle.SetupCircle(range);
+
+        if (show) skillRangeCircle.gameObject.SetActive(true);
+        else skillRangeCircle.gameObject.SetActive(false);
     }
 }
