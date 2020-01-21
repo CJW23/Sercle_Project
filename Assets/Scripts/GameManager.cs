@@ -38,7 +38,10 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
             ClickToMove();
         if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Debug.Log("Skill Input");
             StartCoroutine(curCharacter.skills[0].Activate());
+        }
     }
 
     private void FixedUpdate()
@@ -105,15 +108,13 @@ public class GameManager : MonoBehaviour
         myCP -= 20;
     }
 
-    public void ApplySkill(Character caster, List<Character> targets, SkillEffect effect)
+    /// <summary>
+    /// 계산된 효과를 target 캐릭터에게 적용하는 함수
+    /// </summary>
+    /// <param name="target">효과를 적용할 대상</param>
+    /// <param name="effects">적용할 효과의 리스트</param>
+    public void ApplySkill(Character target, List<EffectResult> effects)
     {
-        foreach (Character target in targets)
-        {
-            List<EffectResult> effects = new List<EffectResult>();
-
-            effects = SkillLogic.EffectCalculate(caster, target, effect);
-
-            target.Apply(effects);
-        }
+        target.Apply(effects);
     }
 }

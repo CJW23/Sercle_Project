@@ -362,8 +362,9 @@ MonoBehaviour:
     atk: 0
     def: 0
     crt: 0
-    ddg: 50
+    ddg: 0
     cc: 0
+  isFriend: 0
   state: 0
   target: {fileID: 0}
   attackRange: 0
@@ -5919,6 +5920,7 @@ MonoBehaviour:
     crt: 0
     ddg: 0
     cc: 0
+  isFriend: 0
   state: 0
   target: {fileID: 0}
   attackRange: 5
@@ -5926,19 +5928,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   skills:
-  - description: "0.5\uCD08\uAC04 \uC790\uC2E0\uC758 \uC774\uB3D9\uC18D\uB3C4\uAC00
-      12 \uC99D\uAC00"
-    targetRange: 0
-    targetType: 0
-    coolDown: 5
-    skillEffect:
-      type: 2
-      damageCoefficient: 0
-      healCoefficeint: 0
-      effectResults:
-      - type: 2
-        amount: 12
-        duration: 0.5
+  - {fileID: 11400000, guid: 94e90361989abf344af09bfc4ea660c5, type: 2}
 --- !u!136 &1534690384534291
 CapsuleCollider:
   m_ObjectHideFlags: 0
