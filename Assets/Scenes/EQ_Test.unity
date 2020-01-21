@@ -331,10 +331,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 174529309}
+  - component: {fileID: 174529310}
   - component: {fileID: 174529308}
   - component: {fileID: 174529307}
   - component: {fileID: 174529306}
-  m_Layer: 0
+  - component: {fileID: 174529311}
+  m_Layer: 8
   m_Name: Character_Alien_Male_01 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,14 +358,19 @@ MonoBehaviour:
   status:
     maxHp: 100
     curHp: 0
-    spd: 0
+    spd: 1
     atk: 0
     def: 0
     crt: 0
-    ddg: 0
+    ddg: 50
+    cc: 0
   state: 0
   target: {fileID: 0}
   attackRange: 0
+  contactLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  skills: []
 --- !u!195 &174529307
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -413,7 +420,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 174529305}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.41, y: 0, z: 12.5}
+  m_LocalPosition: {x: 5, y: 0, z: 12.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 728874319}
@@ -421,6 +428,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &174529310
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174529305}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &174529311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174529305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 586411dda7786e449a75fb48ab2a5c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &193696714
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,7 +1561,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 572435598}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 15, y: 30, z: -20}
+  m_LocalPosition: {x: 5.5, y: 18, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1801,7 +1834,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cps: 3
   myCP: 0
+  inputState: 0
   curCharacter: {fileID: 0}
+  clickedCharacter: {fileID: 0}
 --- !u!4 &717114202
 Transform:
   m_ObjectHideFlags: 0
@@ -3159,14 +3194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c0ba3d86a588604d8aeb4e83f836daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basicInfoPanel: {fileID: 193696714}
-  unitName: {fileID: 240217092}
-  basicStatText: {fileID: 1590992678}
-  talentText: {fileID: 678086627}
-  actionPanel: {fileID: 1344352071}
-  cost: {fileID: 1840158539}
-  description: {fileID: 619493740}
-  nowUnit: {fileID: 0}
 --- !u!1 &1096503117
 GameObject:
   m_ObjectHideFlags: 0
@@ -5864,7 +5891,7 @@ GameObject:
   - component: {fileID: 95305068814371545}
   - component: {fileID: 1515888585}
   - component: {fileID: 1534690384534290}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Character_Alien_Male_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5886,14 +5913,32 @@ MonoBehaviour:
   status:
     maxHp: 100
     curHp: 0
-    spd: 12
+    spd: 8
     atk: 10
     def: 0
     crt: 0
     ddg: 0
+    cc: 0
   state: 0
   target: {fileID: 0}
   attackRange: 5
+  contactLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  skills:
+  - description: "0.5\uCD08\uAC04 \uC790\uC2E0\uC758 \uC774\uB3D9\uC18D\uB3C4\uAC00
+      12 \uC99D\uAC00"
+    targetRange: 0
+    targetType: 0
+    coolDown: 5
+    skillEffect:
+      type: 2
+      damageCoefficient: 0
+      healCoefficeint: 0
+      effectResults:
+      - type: 2
+        amount: 12
+        duration: 0.5
 --- !u!136 &1534690384534291
 CapsuleCollider:
   m_ObjectHideFlags: 0
