@@ -119,6 +119,11 @@ public class Character : MonoBehaviour
         }
     }
 
+    private void OnMouseEnter()
+    {
+        MouseCursor.instance.State = MouseState.Select;
+    }
+
     /// <summary>
     /// 마우스가 이 캐릭터의 콜라이더를 클릭하면 불리는 함수.
     /// GameManager에게 자신이 클릭됐음을 전달.
@@ -127,6 +132,11 @@ public class Character : MonoBehaviour
     {
         Debug.Log("You click " + name);
         GameManager.instance.ClickedCharacter(this);
+    }
+
+    private void OnMouseExit()
+    {
+        MouseCursor.instance.State = MouseState.Idle;
     }
 
     /// <summary>

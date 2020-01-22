@@ -8,11 +8,23 @@ public enum TargetType { Auto, Self, Friend, Enemy }
 [CreateAssetMenu(fileName = "New Skill", menuName = "Skill/Skill")]
 public class Skill : ScriptableObject
 {
+    public string skillName;
     public string description;
+
     public float targetRange;
     public TargetType targetType;
+
+    /// <summary>
+    /// 스킬 명령이 들어온 후 실제로 스킬 효과가 적용될 때까지 걸리는 시간.
+    /// </summary>
+    public float preDelay;
+    /// <summary>
+    /// 스킬 효과 적용 후 조작불가 시간.
+    /// </summary>
+    public float postDelay;
     public float coolDown;
     public SkillEffect skillEffect;
+
     public bool isCooling;
 
     /// <summary>
@@ -22,17 +34,18 @@ public class Skill : ScriptableObject
     /// <returns></returns>
     public IEnumerator Activate(Character caster)
     {
+        #region 쿨타임 체크
         if (isCooling)
         {
-            Debug.Log("This skill is cooling");
             yield break;
         }
+        #endregion
 
         Debug.Log("Start Skill : " + description);
 
-        List<Character> targets = new List<Character>();
-
+        #region 타겟 지정
         GameManager.instance.InputState = InputState.Action;
+        List<Character> targets = new List<Character>();
 
         // 타겟을 지정할 때까지 매 Fixed Update 마다 FindTargets 함수를 돌린다.
         while (targets.Count == 0)
@@ -40,24 +53,25 @@ public class Skill : ScriptableObject
             targets = FindTargets(caster);
             yield return new WaitForFixedUpdate();
         }
-        
-        isCooling = true;
+
         GameManager.instance.InputState = InputState.Normal;
         caster.ShowSkillRnage(false);
+        #endregion
 
         string log = "현재 지정된 타겟은 ";
-        foreach (Character target in targets)
-        {
-            log += target.name + ", ";
-        }
+        foreach (Character target in targets) log += target.name + ", ";
         log += "입니다.";
         Debug.Log(log);
+
+        #region 스킬 효과 적용
+        isCooling = true;
 
         foreach (Character target in targets)
         {
             List<EffectResult> effects = skillEffect.GetEffectResult(caster, target);
             GameManager.instance.ApplySkill(target, effects);
         }
+        #endregion
 
         yield return new WaitForSeconds(coolDown);
 
@@ -73,21 +87,23 @@ public class Skill : ScriptableObject
     /// <returns></returns>
     public IEnumerator Activate(Character caster, Character target)
     {
+        #region 쿨타임 체크
         if (isCooling)
         {
-            //Debug.Log("This skill is cooling");
             yield break;
         }
+        #endregion
 
         Debug.Log("Start Skill : " + description);
 
+        Debug.Log("현재 지정된 타겟은 " + target.name + "입니다.");
+
+        #region 스킬 효과 적용
         isCooling = true;
-        
-        string log = "현재 지정된 타겟은 " + target + "입니다.";
-        Debug.Log(log);
 
         List<EffectResult> effects = skillEffect.GetEffectResult(caster, target);
         GameManager.instance.ApplySkill(target, effects);
+        #endregion
 
         yield return new WaitForSeconds(coolDown);
 

@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/EQ_Test.unity
+    guid: d60dbed23d410c64788a22dbdb79d094
   m_configObjects: {}
