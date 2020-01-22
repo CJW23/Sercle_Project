@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
             anim.Stop();
             moveCircle.anchoredPosition = new Vector2(hit.point.x, hit.point.z);
             anim.Play();
-            curCharacter.GetComponent<NavMeshAgent>().destination = hit.point;
+            curCharacter.SetDestination(hit.point);
         }
     }
     

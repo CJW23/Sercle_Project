@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum CharacterState { Idle, Move, Attack, Die }
+public enum CharacterState { Idle, Move, Attack, Die, Uncontrollable }
 
 public class Character : MonoBehaviour
 {
@@ -119,6 +119,12 @@ public class Character : MonoBehaviour
         }
     }
 
+    public void ControlState(bool canControl)
+    {
+        if(canControl) state = CharacterState.Idle;
+        else state = CharacterState.Uncontrollable;
+    }
+
     private void OnMouseEnter()
     {
         MouseCursor.instance.State = MouseState.Select;
@@ -137,6 +143,12 @@ public class Character : MonoBehaviour
     private void OnMouseExit()
     {
         MouseCursor.instance.State = MouseState.Idle;
+    }
+
+    public void SetDestination(Vector3 pos)
+    {
+        if (state == CharacterState.Uncontrollable) return;
+        agent.destination = pos;
     }
 
     /// <summary>

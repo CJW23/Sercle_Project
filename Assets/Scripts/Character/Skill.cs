@@ -63,6 +63,10 @@ public class Skill : ScriptableObject
         log += "입니다.";
         Debug.Log(log);
 
+        // caster를 조작 불가 상태로 전환
+        caster.ControlState(false);
+        yield return new WaitForSeconds(preDelay);
+
         #region 스킬 효과 적용
         isCooling = true;
 
@@ -72,6 +76,10 @@ public class Skill : ScriptableObject
             GameManager.instance.ApplySkill(target, effects);
         }
         #endregion
+
+        yield return new WaitForSeconds(postDelay);
+        // caster를 조작 가능 상태로 전환
+        caster.ControlState(true);
 
         yield return new WaitForSeconds(coolDown);
 
