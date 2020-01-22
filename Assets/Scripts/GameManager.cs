@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum InputState { Normal, Action }
+public enum InputState { Normal, Action, Direction }
 
 public class GameManager : MonoBehaviour
 {
@@ -38,6 +38,10 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
             Upgrade();
+        if (Input.GetMouseButtonDown(0))
+        {
+
+        }
         if (Input.GetMouseButtonDown(1))
             ClickToMove();
         if (Input.GetKeyDown(KeyCode.Q))
@@ -88,7 +92,29 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-    
+
+    public Vector3? GetDirection(Character caster)
+    {
+        Vector3? dir = null;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 100))
+        {
+            Vector3 casterPos = caster.transform.position;
+            Vector3 rawDir = hit.point - casterPos;
+            caster.ShowSkillDirection(rawDir);
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                // Debug.Log("마우스 위치 : " + hit.point + ", 시전자 위치 : " + casterPos + ", 계산된 방향 : " + rawDir);
+                dir = rawDir.normalized;
+                caster.UnhowSkillDirection();
+            }
+        }
+
+        return dir;
+    }
 
     /// <summary>
     /// 선택된 캐릭터가 있고 마우스 오른쪽 클릭을 했을 때 해당 캐릭터의 목표지점을 설정

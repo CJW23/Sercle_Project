@@ -20,6 +20,7 @@ public class Character : MonoBehaviour
 
     [Header("Skill UI")]
     [SerializeField] private CircleRenderer skillRangeCircle;
+    [SerializeField] private RectTransform skillDirRect;
 
     private NavMeshAgent agent;
     private bool isAttacking = false;
@@ -52,7 +53,7 @@ public class Character : MonoBehaviour
     {
         target = null;
 
-        Collider[] colls = Physics.OverlapSphere(transform.position, basicAttack.targetRange, contactLayer);
+        Collider[] colls = Physics.OverlapSphere(transform.position, 1, contactLayer);
 
         float nearestDis = 9999999;
 
@@ -70,12 +71,12 @@ public class Character : MonoBehaviour
 
     private void BasicAttackActivate()
     {
-        StartCoroutine(basicAttack.Activate(this, target));
+        //StartCoroutine(basicAttack.Activate(this, target));
     }
 
     public void SkillActivate(int skillNum)
     {
-        StartCoroutine(skills[skillNum].Activate(this));
+        StartCoroutine(skills[skillNum].Fire(this));
     }
 
     private void StateMachine()
@@ -209,5 +210,18 @@ public class Character : MonoBehaviour
 
         if (show) skillRangeCircle.gameObject.SetActive(true);
         else skillRangeCircle.gameObject.SetActive(false);
+    }
+
+    public void ShowSkillDirection(Vector3 dir)
+    {
+        skillDirRect.gameObject.SetActive(true);
+        float angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg + transform.rotation.eulerAngles.y;
+        Debug.Log(angle);
+        skillDirRect.localRotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    public void UnhowSkillDirection()
+    {
+        skillDirRect.gameObject.SetActive(false);
     }
 }
