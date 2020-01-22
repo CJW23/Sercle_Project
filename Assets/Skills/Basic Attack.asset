@@ -16,5 +16,5 @@ MonoBehaviour:
   targetRange: 5
   targetType: 1
   coolDown: 0.5
-  skillEffect: {fileID: 11400000, guid: 06e5451fbdaf13a409b4140de933d30d, type: 2}
+  skillEffect: {fileID: 11400000, guid: 2fe064db4631a4d4daba1f1677eb7848, type: 2}
   isCooling: 0

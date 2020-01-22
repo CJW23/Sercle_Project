@@ -3,13 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TargetType { Self, Friend, Enemy }
+public enum TargetType { Auto, Self, Friend, Enemy }
 
 [CreateAssetMenu(fileName = "New Skill", menuName = "Skill/Skill")]
 public class Skill : ScriptableObject
 {
-    private Character caster;
-    public Character Caster { set { caster = value; } }
     public string description;
     public float targetRange;
     public TargetType targetType;
@@ -17,32 +15,33 @@ public class Skill : ScriptableObject
     public SkillEffect skillEffect;
     public bool isCooling;
 
-    private void Awake()
+    /// <summary>
+    /// 스킬의 효과를 발동시키는 함수.
+    /// </summary>
+    /// <param name="caster">시전자</param>
+    /// <returns></returns>
+    public IEnumerator Activate(Character caster)
     {
-        isCooling = false;
-    }
-
-    public IEnumerator Activate()
-    {
-        Debug.Log("Start Skill : " + description);
-        if(isCooling)
+        if (isCooling)
         {
             Debug.Log("This skill is cooling");
             yield break;
         }
 
-        isCooling = true;
+        Debug.Log("Start Skill : " + description);
 
         List<Character> targets = new List<Character>();
 
         GameManager.instance.InputState = InputState.Action;
 
+        // 타겟을 지정할 때까지 매 Fixed Update 마다 FindTargets 함수를 돌린다.
         while (targets.Count == 0)
         {
-            targets = FindTargets();
+            targets = FindTargets(caster);
             yield return new WaitForFixedUpdate();
         }
-
+        
+        isCooling = true;
         GameManager.instance.InputState = InputState.Normal;
         caster.ShowSkillRnage(false);
 
@@ -65,35 +64,67 @@ public class Skill : ScriptableObject
         isCooling = false;
     }
 
-    private List<Character> FindTargets()
+    /// <summary>
+    /// 기본 자동 공격을 위한 발동 함수.
+    /// 시전자와 타겟을 지정해서 바로 발동한다.
+    /// </summary>
+    /// <param name="caster">기본 공격을 시전하는 캐릭터</param>
+    /// <param name="target">대상</param>
+    /// <returns></returns>
+    public IEnumerator Activate(Character caster, Character target)
+    {
+        if (isCooling)
+        {
+            //Debug.Log("This skill is cooling");
+            yield break;
+        }
+
+        Debug.Log("Start Skill : " + description);
+
+        isCooling = true;
+        
+        string log = "현재 지정된 타겟은 " + target + "입니다.";
+        Debug.Log(log);
+
+        List<EffectResult> effects = skillEffect.GetEffectResult(caster, target);
+        GameManager.instance.ApplySkill(target, effects);
+
+        yield return new WaitForSeconds(coolDown);
+
+        isCooling = false;
+    }
+
+    private List<Character> FindTargets(Character caster)
     {
         List<Character> targets = new List<Character>();
 
         switch (targetType)
         {
+            case TargetType.Auto:
+                break;
             case TargetType.Self:
                 targets.Add(caster);
                 break;
             case TargetType.Friend:
-                Debug.Log("타겟 찾는 중");
+                //Debug.Log("타겟 찾는 중");
                 // 스킬의 범위를 보여준다.
                 caster.ShowSkillRnage(true, targetRange);
 
                 // 마우스 클릭에 의한 캐릭터를 지정받는다.
                 Character target = GameManager.instance.ClickedCharacter();
 
-                if (isValidTarget(target, true)) targets.Add(target);
+                if (isValidTarget(caster, target, true)) targets.Add(target);
               
                 break;
             case TargetType.Enemy:
-                Debug.Log("타겟 찾는 중");
+                //Debug.Log("타겟 찾는 중");
                 // 스킬의 범위를 보여준다.
                 caster.ShowSkillRnage(true, targetRange);
 
                 // 마우스 클릭에 의한 캐릭터를 지정받는다.
                 target = GameManager.instance.ClickedCharacter();
 
-                if (isValidTarget(target, false)) targets.Add(target);
+                if (isValidTarget(caster, target, false)) targets.Add(target);
 
                 break;
             default:
@@ -112,7 +143,7 @@ public class Skill : ScriptableObject
     /// <param name="target">유효성 판정 대상</param>
     /// <param name="shouldFriend">아군을 향하는 스킬이라면 true, 적군을 향하는 스킬이라면 false</param>
     /// <returns></returns>
-    private bool isValidTarget(Character target, bool shouldFriend)
+    private bool isValidTarget(Character caster, Character target, bool shouldFriend)
     {
         if (target == null) return false;
         if (target.isFriend != shouldFriend) return false;

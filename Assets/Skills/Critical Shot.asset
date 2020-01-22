@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: "3.5*\uACF5\uACA9\uB825\uC73C\uB85C \uACF5\uACA9\uC744 \uAC00\uD569\uB2C8\uB2E4."
   targetRange: 8
-  targetType: 2
+  targetType: 3
   coolDown: 3
   skillEffect: {fileID: 11400000, guid: b87917a464b62e148bb7aaf6a91cefee, type: 2}
-  isCooling: 1
+  isCooling: 0

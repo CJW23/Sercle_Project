@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     public InputState InputState { set { inputState = value; } }
     [SerializeField] private Character curCharacter;
     [SerializeField] private Character clickedCharacter;
+
+    [Header("Display")]
+    [SerializeField] private RectTransform moveCircle;
     
     public static GameManager instance;
 
@@ -39,8 +42,13 @@ public class GameManager : MonoBehaviour
             ClickToMove();
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log("Skill Input");
-            StartCoroutine(curCharacter.skills[0].Activate());
+            Debug.Log("First Skill Input");
+            curCharacter.SkillActivate(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            Debug.Log("Second Skill Input");
+            curCharacter.SkillActivate(1);
         }
     }
 
@@ -93,6 +101,10 @@ public class GameManager : MonoBehaviour
         
         if (Physics.Raycast(ray, out hit, 100))
         {
+            Animation anim = moveCircle.GetComponent<Animation>();
+            anim.Stop();
+            moveCircle.anchoredPosition = new Vector2(hit.point.x, hit.point.z);
+            anim.Play();
             curCharacter.GetComponent<NavMeshAgent>().destination = hit.point;
         }
     }
@@ -109,7 +121,8 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 계산된 효과를 target 캐릭터에게 적용하는 함수
+    /// 계산된 효과를 target 캐릭터에게 적용하는 함수.
+    /// 모든 공격, 효과는 이 함수를 거쳐가도록 할 예정.
     /// </summary>
     /// <param name="target">효과를 적용할 대상</param>
     /// <param name="effects">적용할 효과의 리스트</param>

@@ -41,9 +41,10 @@ public class Character : MonoBehaviour
     private void InitialSetting()
     {
         status.ChangeStat(StatusType.CHP, status.MHP);
+        basicAttack.isCooling = false;
         foreach (Skill skill in skills)
         {
-            skill.Caster = this;
+            skill.isCooling = false;
         }
     }
 
@@ -67,17 +68,14 @@ public class Character : MonoBehaviour
         }
     }
 
-    private IEnumerator Attack()
+    private void BasicAttackActivate()
     {
-        if (isAttacking) yield break;
+        StartCoroutine(basicAttack.Activate(this, target));
+    }
 
-        isAttacking = true;
-
-        // 게임 매니저에게 공격한다고 알려준다.
-        GameManager.instance.ApplySkill(target, basicAttack.skillEffect.GetEffectResult(this, target));
-
-        yield return new WaitForSeconds(1f);
-        isAttacking = false;
+    public void SkillActivate(int skillNum)
+    {
+        StartCoroutine(skills[skillNum].Activate(this));
     }
 
     private void StateMachine()
@@ -111,7 +109,7 @@ public class Character : MonoBehaviour
             case CharacterState.Move:
                 break;
             case CharacterState.Attack:
-                StartCoroutine(Attack());
+                BasicAttackActivate();
                 break;
             case CharacterState.Die:
                 Destroy(gameObject);
@@ -121,8 +119,10 @@ public class Character : MonoBehaviour
         }
     }
 
-    // 마우스가 이 캐릭터의 콜라이더를 클릭하면 불리는 함수
-    // GameManager에게 자신이 클릭됐음을 전달
+    /// <summary>
+    /// 마우스가 이 캐릭터의 콜라이더를 클릭하면 불리는 함수.
+    /// GameManager에게 자신이 클릭됐음을 전달.
+    /// </summary>
     private void OnMouseDown()
     {
         Debug.Log("You click " + name);
