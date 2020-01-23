@@ -4,64 +4,77 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum RangeType { Self, Around, Direction }
+public enum TargetType { Self, Friend, Enemy }
+public enum TargetNum { One, All }
 
 [CreateAssetMenu(fileName = "New Skill", menuName = "Skill/Skill")]
 public class Skill : ScriptableObject
 {
+    public enum SkillState { Idle, Ready, Fire, CoolDown }
+
     [Header("Basic Info")]
     public string skillName;
     public string description;
+    public SkillState skillState;
 
     [Header("Time")]
     public float preDelay;
     public float postDelay;
     public float coolDown;
-    public bool isCooling;
 
     [Header("Projectile Info")]
     public Projectile proj;
     public float speed;
+    public float range;
     public Vector3 size;
-    public bool isForFriend;
+    public TargetType targetType;
+    public TargetNum targetNum;
     public SkillEffect skillEffect;
 
     public IEnumerator Fire(Character caster)
     {
         #region Check Cool Time
-        if (isCooling) yield break;
+        if (skillState != SkillState.Idle) yield break;
         #endregion
+
+        skillState = SkillState.Ready;
 
         #region Get Direction
         Vector3? dir = null;
-        while (dir.HasValue == false)
+        if (speed == 0)
         {
-            dir = GameManager.instance.GetDirection(caster);
-            yield return new WaitForFixedUpdate();
+            dir = Vector3.zero;
+        }
+        else
+        {
+            while (dir.HasValue == false)
+            {
+                dir = GameManager.instance.GetDirection(caster);
+                yield return new WaitForFixedUpdate();
+            }
         }
         #endregion
 
-        isCooling = true;
+        skillState = SkillState.Fire;
 
         #region Wait for Pre delay
-        caster.ControlState(false);
         yield return new WaitForSeconds(preDelay);
         #endregion
 
         #region 투사체 발사
-        Vector3 spawnPos = caster.transform.position;
+        Vector3 spawnPos = caster.transform.position + new Vector3(0, 1.1f, 0);
         Projectile projectile = Instantiate(proj, spawnPos, Quaternion.identity);
-        projectile.Initialize(caster, dir.Value, speed, size, isForFriend, skillEffect);
+        projectile.Initialize(caster, dir.Value, speed, range, size, targetType, targetNum, skillEffect);
         #endregion
 
         #region Wait for Post Delay
         yield return new WaitForSeconds(postDelay);
-        caster.ControlState(true);
         #endregion
+
+        skillState = SkillState.CoolDown;
 
         yield return new WaitForSeconds(coolDown);
 
-        isCooling = false;
+        skillState = SkillState.Idle;
     }
-
-    
 }

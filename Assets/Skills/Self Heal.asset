@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbc63ca6b8a0e6743bf634c69760190f, type: 3}
-  m_Name: Critical Shot
+  m_Name: Self Heal
   m_EditorClassIdentifier: 
-  skillName: "\uCE58\uBA85\uC801\uC778 \uC0AC\uACA9"
-  description: "3.5*\uACF5\uACA9\uB825\uC73C\uB85C \uACF5\uACA9\uC744 \uAC00\uD569\uB2C8\uB2E4."
-  skillState: 2
+  skillName: "\uC790\uD790"
+  description: "\uC790\uC2E0\uC744 \uD790 \uD569\uB2C8\uB2E4."
+  skillState: 0
   preDelay: 0
   postDelay: 0
-  coolDown: 3
+  coolDown: 5
   proj: {fileID: 6332989940410738062, guid: f1ffe6c1057093e42a09702b86636b4e, type: 3}
-  speed: 10
-  range: 15
-  size: {x: 1, y: 1, z: 1}
-  targetType: 2
+  speed: 0
+  range: 0
+  size: {x: 0, y: 0, z: 0}
+  targetType: 0
   targetNum: 0
-  skillEffect: {fileID: 11400000, guid: b87917a464b62e148bb7aaf6a91cefee, type: 2}
+  skillEffect: {fileID: 11400000, guid: cb0c86e30b5ede041a41373e3d349d15, type: 2}

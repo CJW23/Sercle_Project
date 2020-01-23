@@ -19,7 +19,10 @@ public struct EffectResult
     }
 }
 
-public abstract class SkillEffect : ScriptableObject
+public class SkillEffect : ScriptableObject
 {
-    public abstract List<EffectResult> GetEffectResult(Character caster, Character target);
+    public virtual List<EffectResult> GetEffectResult(Character caster, Character target)
+    {
+        return null;
+    }
 }

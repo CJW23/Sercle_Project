@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum CharacterState { Idle, Move, Attack, Die, Uncontrollable }
+public enum CharacterState { Idle, Move, Attack, Die }
 
 public class Character : MonoBehaviour
 {
+    public int index;
     public Status status;
     public bool isFriend;
 
-    private CharacterState state;
+    [SerializeField] private CharacterState state;
     private Character target = null;
     [SerializeField] private LayerMask contactLayer;
 
@@ -42,10 +43,10 @@ public class Character : MonoBehaviour
     private void InitialSetting()
     {
         status.ChangeStat(StatusType.CHP, status.MHP);
-        basicAttack.isCooling = false;
+        basicAttack.skillState = Skill.SkillState.Idle;
         foreach (Skill skill in skills)
         {
-            skill.isCooling = false;
+            skill.skillState = Skill.SkillState.Idle;
         }
     }
 
@@ -74,7 +75,7 @@ public class Character : MonoBehaviour
         //StartCoroutine(basicAttack.Activate(this, target));
     }
 
-    public void SkillActivate(int skillNum)
+    public void UseSkill(int skillNum)
     {
         StartCoroutine(skills[skillNum].Fire(this));
     }
@@ -120,12 +121,6 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void ControlState(bool canControl)
-    {
-        if(canControl) state = CharacterState.Idle;
-        else state = CharacterState.Uncontrollable;
-    }
-
     private void OnMouseEnter()
     {
         MouseCursor.instance.State = MouseState.Select;
@@ -148,7 +143,6 @@ public class Character : MonoBehaviour
 
     public void SetDestination(Vector3 pos)
     {
-        if (state == CharacterState.Uncontrollable) return;
         agent.destination = pos;
     }
 
@@ -216,7 +210,6 @@ public class Character : MonoBehaviour
     {
         skillDirRect.gameObject.SetActive(true);
         float angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg + transform.rotation.eulerAngles.y;
-        Debug.Log(angle);
         skillDirRect.localRotation = Quaternion.Euler(0, 0, angle);
     }
 

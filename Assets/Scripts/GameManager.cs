@@ -7,6 +7,9 @@ public enum InputState { Normal, Action, Direction }
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Characters")]
+    [SerializeField] private List<Character> characters;
+
     [Tooltip("초당 CP 증가량")]
     [SerializeField] private float cps;
     [SerializeField] private float myCP;
@@ -29,6 +32,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        for (int i = 0; i < characters.Count; i++)
+        {
+            characters[i].index = i;
+        }
+
         myCP = 50;
     }
 
@@ -47,12 +55,12 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Debug.Log("First Skill Input");
-            curCharacter.SkillActivate(0);
+            curCharacter.UseSkill(0);
         }
         else if (Input.GetKeyDown(KeyCode.W))
         {
             Debug.Log("Second Skill Input");
-            curCharacter.SkillActivate(1);
+            curCharacter.UseSkill(1);
         }
     }
 
@@ -155,5 +163,8 @@ public class GameManager : MonoBehaviour
     public void ApplySkill(Character target, List<EffectResult> effects)
     {
         target.Apply(effects);
+
+        int index = target.index;
+        // index에게 effects를 적용하도록 보내면 됨
     }
 }

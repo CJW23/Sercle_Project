@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f13d70ed020dce4d8168a1728abc44f, type: 3}
-  m_Name: Critical Shot
+  m_Script: {fileID: 11500000, guid: d56d67a6e867e0b4c954b3a72c6215ae, type: 3}
+  m_Name: Self Heal
   m_EditorClassIdentifier: 
-  damageCoefficient: 3.5
+  healCoefficient: 2

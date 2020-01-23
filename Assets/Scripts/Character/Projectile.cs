@@ -8,63 +8,71 @@ public class Projectile : MonoBehaviour
     [SerializeField] private Character caster;
     [SerializeField] private Vector3 direction;
     [SerializeField] private float speed;
-    //[SerializeField] private Vector3 size;
-    [SerializeField] private bool isForFriend;
+    [SerializeField] private float range;
+    [SerializeField] private TargetType targetType;
+    [SerializeField] private TargetNum targetNum;
     [SerializeField] private SkillEffect skillEffect;
 
-    public void Initialize(Character caster, Vector3 direction, float speed, Vector3 size, bool isForFriend, SkillEffect skillEffect)
+    public void Initialize(
+        Character caster, Vector3 direction, float speed, float range,
+        Vector3 size, TargetType targetType, TargetNum targetNum, SkillEffect skillEffect)
     {
         this.caster = caster;
         this.direction = direction;
         this.speed = speed;
+        this.range = range;
         transform.localScale = size;
-        this.isForFriend = isForFriend;
+        this.targetType = targetType;
+        this.targetNum = targetNum;
         this.skillEffect = skillEffect;
+    }
+
+    private void Start()
+    {
     }
 
     private void FixedUpdate()
     {
-        transform.position += direction * speed * Time.fixedDeltaTime;
+        if (range > 0)
+        {
+            transform.position += direction * speed * Time.fixedDeltaTime;
+            range -= speed * Time.fixedDeltaTime;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Character target = other.GetComponent<Character>();
-        if (target.isFriend != isForFriend) return;
+        if (!target) return;
+
+        if (IsValidTargetType(target) == false) return;
 
         GameManager.instance.ApplySkill(target, skillEffect.GetEffectResult(caster, target));
-    }
-}
 
-
-/*
-public class AroundProjectile
-{
-    bool isFriend;
-    float targetRange;
-    LayerMask contactLayer;
-
-    private void Start()
-    {
-
+        if (targetNum == TargetNum.One) Destroy(gameObject);
     }
 
-    private List<Character> FindTargets()
+    private bool IsValidTargetType(Character target)
     {
-        List<Character> targets = new List<Character>();
-
-        Collider[] colls = Physics.OverlapSphere(caster.transform.position, targetRange, contactLayer);
-
-        foreach(Collider coll in colls)
+        switch (targetType)
         {
-            Character character = coll.GetComponent<Character>();
-            if (character.isFriend != isFriend) continue;
-            if (Vector3.Distance(caster.transform.position, character.transform.position) > targetRange) continue;
-
-            targets.Add(character);
+            case TargetType.Self:
+                if (target == caster) return true;
+                break;
+            case TargetType.Friend:
+                if (target == caster) return false;
+                if (target.isFriend) return true;
+                break;
+            case TargetType.Enemy:
+                if (target == caster) return false;
+                if (!target.isFriend) return true;
+                break;
         }
 
-        return targets;
+        return false;
     }
 }
-*/
