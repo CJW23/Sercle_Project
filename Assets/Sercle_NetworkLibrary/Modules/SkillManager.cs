@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class SkillManager : MonoBehaviour
 {
-    
+    public static SkillManager instance;
+
     // 네트워크 매니저
     private NetworkManager networkManager;
-    
-    
+
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         // 네트워크 매니저 참조
-        networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        networkManager = transform.parent.GetComponent<NetworkManager>();
         // 이동 정보 수신함수 등록
         networkManager.RegisterReceiveNotification(PacketId.SkillData, OnReceiveSkillPacket);
     }
@@ -21,6 +27,7 @@ public class SkillManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         // 우클릭시
         if (Input.GetMouseButtonDown(1))
         {
@@ -33,7 +40,7 @@ public class SkillManager : MonoBehaviour
             data.types[0] = (int)StatusType.ATK;
             data.types[1] = (int)StatusType.SPD;
             SendLocalSkillInfo(data);
-        }
+        }*/
     }
 
 

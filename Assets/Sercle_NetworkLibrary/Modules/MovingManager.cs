@@ -9,25 +9,24 @@ using UnityEngine;
 
 public class MovingManager : MonoBehaviour
 {
+    public static MovingManager instance;
 
     // 네트워크 매니저
     private NetworkManager networkManager;
 
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
+    }
 
-    // Start is called before the first frame update
     void Start()
     {
         // 네트워크 매니저 참조
-        networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        networkManager = transform.parent.GetComponent<NetworkManager>();
         // 이동 정보 수신함수 등록
         networkManager.RegisterReceiveNotification(PacketId.MovingData, OnReceiveMovingPacket);
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void FixedUpdate()
@@ -62,7 +61,10 @@ public class MovingManager : MonoBehaviour
     {
         MovingPacket packet = new MovingPacket(data);
         MovingData moving = packet.GetPacket();
-        Debug.Log(moving + " 수신완료(마우스).");
+        Debug.Log(moving + " 수신완료");
+
+        Vector3 destination = new Vector3(moving.destX, moving.destY, moving.destZ);
+        GameManager.instance.MoveCharacter(moving.index, destination);
         
         // 수신 후 사용 예
         // navAgent(moving.index).destinaion(new Vector3(moving.destX, moving.destY, moving.dextZ);
