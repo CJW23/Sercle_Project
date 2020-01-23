@@ -140,21 +140,26 @@ public class GameManager : MonoBehaviour
             moveCircle.anchoredPosition = new Vector2(hit.point.x, hit.point.z);
             anim.Play();
 
-            // 서버로 현재 캐릭터의 도착 지점을 전송하고
-            MovingManager.instance.SendLocalMovingInfo(curCharacter.index, hit.point);
-            // 내 클라에서는 GM이 알아서 명령을 내린다.
             MoveCharacter(curCharacter.index, hit.point);
         }
     }
 
     /// <summary>
-    /// characters[index]의 목표지점을 destination으로 설정해주는 함수
+    /// characters[index]의 목표지점을 destination으로 설정해주고
+    /// 이 정보를 서버로 전송
     /// </summary>
     /// <param name="index">캐릭터 번호</param>
     /// <param name="destination">목표 지점</param>
     public void MoveCharacter(int index, Vector3 destination)
     {
         characters[index].SetDestination(destination);
+        MovingManager.instance.SendLocalMovingInfo(index, destination);
+    }
+
+    public void FireProjectile(int index, int num, Vector3 dir)
+    {
+        characters[index].FireProjectile(num, dir);
+        SkillManager.instance.SendLocalSkillInfo(index, num, dir);
     }
     
     /// <summary>

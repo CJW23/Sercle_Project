@@ -123,13 +123,10 @@ public class SkillPacket : IPacket<SkillData>
         {
             bool ret = true;
             ret &= Serialize(packet.index);
-            ret &= Serialize(packet.count);
-            for(int i = 0; i < packet.count; i++)
-            {
-                ret &= Serialize(packet.types[i]);
-            }
-            ret &= Serialize(packet.amount);
-            ret &= Serialize(packet.duration);
+            ret &= Serialize(packet.num);
+            ret &= Serialize(packet.dirX);
+            ret &= Serialize(packet.dirY);
+            ret &= Serialize(packet.dirZ);
 
             return ret;
         }
@@ -144,16 +141,10 @@ public class SkillPacket : IPacket<SkillData>
 
             bool ret = true;
             ret &= Deserialize(ref element.index);
-            ret &= Deserialize(ref element.count);
-
-            element.types = new int[element.count];
-            
-            for (int i = 0; i < element.count; i++)
-            {
-                ret &= Deserialize(ref element.types[i]);
-            }
-            ret &= Deserialize(ref element.amount);
-            ret &= Deserialize(ref element.duration);
+            ret &= Deserialize(ref element.num);
+            ret &= Deserialize(ref element.dirX);
+            ret &= Deserialize(ref element.dirY);
+            ret &= Deserialize(ref element.dirZ);
 
             return ret;
         }

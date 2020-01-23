@@ -152,25 +152,21 @@ public struct SkillData
 {
     // 캐릭터 번호
     public int index;
-    // 스탯 타입의 갯수
-    public int count;
-    // 스탯 타입
-    public int [] types;
-    // 변화량
-    public float amount;
-    // 지속시간
-    public float duration;
+    // 스킬 번호
+    public int num;
+    // 방향
+    public float dirX;
+    public float dirY;
+    public float dirZ;
 
     public override string ToString()
     {
         string str = "";
         str += "index:" + index;
-        str += " count:" + count;
-        str += " types:";
-        for (int i=0;i<count;i++)
-            str += ((StatusType)types[i] +" ");
-        str += " amount:" + amount;
-        str += " duration:" + duration;
+        str += " num:" + num;
+        str += " dirX:" + dirX;
+        str += " dirY:" + dirY;
+        str += " dirZ:" + dirZ;
         return str;
     }
 }

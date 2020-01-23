@@ -77,7 +77,12 @@ public class Character : MonoBehaviour
 
     public void UseSkill(int skillNum)
     {
-        StartCoroutine(skills[skillNum].Fire(this));
+        StartCoroutine(skills[skillNum].Use(this, skillNum));
+    }
+
+    public void FireProjectile(int num, Vector3 dir)
+    {
+        skills[num].Fire(this, dir);
     }
 
     private void StateMachine()

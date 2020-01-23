@@ -31,7 +31,7 @@ public class Skill : ScriptableObject
     public TargetNum targetNum;
     public SkillEffect skillEffect;
 
-    public IEnumerator Fire(Character caster)
+    public IEnumerator Use(Character caster, int num)
     {
         #region Check Cool Time
         if (skillState != SkillState.Idle) yield break;
@@ -62,9 +62,8 @@ public class Skill : ScriptableObject
         #endregion
 
         #region 투사체 발사
-        Vector3 spawnPos = caster.transform.position + new Vector3(0, 1.1f, 0);
-        Projectile projectile = Instantiate(proj, spawnPos, Quaternion.identity);
-        projectile.Initialize(caster, dir.Value, speed, range, size, targetType, targetNum, skillEffect);
+        // GM에게 index 번째 캐릭터의 num번째 스킬을 dir 방향으로 사용한다고 알려준다.
+        GameManager.instance.FireProjectile(caster.index, num, dir.Value);
         #endregion
 
         #region Wait for Post Delay
@@ -76,5 +75,12 @@ public class Skill : ScriptableObject
         yield return new WaitForSeconds(coolDown);
 
         skillState = SkillState.Idle;
+    }
+
+    public void Fire(Character caster, Vector3 dir)
+    {
+        Vector3 spawnPos = caster.transform.position + new Vector3(0, 1.1f, 0);
+        Projectile projectile = Instantiate(proj, spawnPos, Quaternion.identity);
+        projectile.Initialize(caster, dir, speed, range, size, targetType, targetNum, skillEffect);
     }
 }

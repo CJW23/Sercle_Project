@@ -53,7 +53,8 @@ public class MovingManager : MonoBehaviour
         // 생성자로 데이터에 패킷을 연결
         MovingPacket packet = new MovingPacket(movingData);
         // UDP 전송
-        networkManager.SendUnreliable<MovingData>(packet);
+        // networkManager.SendUnreliable<MovingData>(packet);
+        networkManager.SendReliable<MovingData>(packet);
     }
 
     // 이동 정보 패킷 획득 함수
@@ -61,7 +62,7 @@ public class MovingManager : MonoBehaviour
     {
         MovingPacket packet = new MovingPacket(data);
         MovingData moving = packet.GetPacket();
-        Debug.Log(moving + " 수신완료");
+        Debug.Log(moving + " 수신완료(이동)");
 
         Vector3 destination = new Vector3(moving.destX, moving.destY, moving.destZ);
         GameManager.instance.MoveCharacter(moving.index, destination);

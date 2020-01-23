@@ -45,14 +45,21 @@ public class SkillManager : MonoBehaviour
 
 
     // 스킬 정보를 상대에게 전송하는 함수
-    public void SendLocalSkillInfo(SkillData data)
+    public void SendLocalSkillInfo(int index, int num, Vector3 dir)
     {
-        // 패킷 붙힘.
-        SkillPacket packet = new SkillPacket(data);
+        // 이동정보 데이터 생성 후 정보 입력
+        SkillData skillData = new SkillData();
+        skillData.index = index;
+        skillData.num = num;
+        skillData.dirX = dir.x;
+        skillData.dirY = dir.y;
+        skillData.dirZ = dir.z;
+        Debug.Log("전송 " + skillData);
+        // 생성자로 데이터에 패킷을 연결
+        SkillPacket packet = new SkillPacket(skillData);
         // UDP 전송
-        networkManager.SendUnreliable<SkillData>(packet);
-        
-        Debug.Log("전송 " + data);
+        //networkManager.SendUnreliable<SkillData>(packet);
+        networkManager.SendReliable<SkillData>(packet);
     }
 
 
@@ -62,6 +69,9 @@ public class SkillManager : MonoBehaviour
         SkillPacket packet = new SkillPacket(data);
         SkillData skill = packet.GetPacket();
         Debug.Log(skill + " 수신완료(스킬).");
+
+        Vector3 dir = new Vector3(skill.dirX, skill.dirY, skill.dirZ);
+        GameManager.instance.FireProjectile(skill.index, skill.num, dir);
 
         // 수신 후 사용 예
         // navAgent(moving.index).destinaion(new Vector3(moving.destX, moving.destY, moving.dextZ);

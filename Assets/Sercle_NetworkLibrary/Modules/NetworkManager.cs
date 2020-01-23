@@ -45,11 +45,11 @@ public class NetworkManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (transportTCP.IsConnected())
-        //{
-        //    ReceiveReliableData();
-        //}
-        ReceiveData();
+        if (transportTCP.IsConnected())
+        {
+            ReceiveReliableData();
+        }
+        // ReceiveData();
     }
 
     private void FixedUpdate()
@@ -62,7 +62,7 @@ public class NetworkManager : MonoBehaviour
         byte[] packet = new byte[1400];
         while (transportTCP.Receive(ref packet, packet.Length) > 0)
         {
-            Debug.Log("수신");
+            
             // 수신패킷 분배
             ReceivePacket(packet);
         }
@@ -206,16 +206,16 @@ public class NetworkManager : MonoBehaviour
     {
         if (!isNetConnected)
         {
-            Debug.Log("UDP 연결 버튼 클릭됨.");
-            SetNetConnectionStatus(transportUDP.Connect("127.0.0.1", 3098));
-            if (GetNetConnectionStatus())
-                Time.timeScale = 1f;
-            //SetNetConnectionStatus(transportTCP.Connect("127.0.0.1", 3098));
-            ////transportTCP.Send(System.Text.Encoding.UTF8.GetBytes("PLEASEE"), 10);
+            //Debug.Log("UDP 연결 버튼 클릭됨.");
+            //SetNetConnectionStatus(transportUDP.Connect("127.0.0.1", 3098));
             //if (GetNetConnectionStatus())
-            //{
             //    Time.timeScale = 1f;
-            //}
+            SetNetConnectionStatus(transportTCP.Connect("127.0.0.1", 3098));
+            //transportTCP.Send(System.Text.Encoding.UTF8.GetBytes("PLEASEE"), 10);
+            if (GetNetConnectionStatus())
+            {
+                Time.timeScale = 1f;
+            }
         }
     }
 }
