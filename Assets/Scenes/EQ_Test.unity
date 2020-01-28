@@ -482,10 +482,11 @@ MonoBehaviour:
     cc: 0
   isFriend: 0
   state: 0
+  target: {fileID: 0}
   contactLayer:
     serializedVersion: 2
     m_Bits: 0
-  basicAttack: {fileID: 11400000, guid: aef0f1ba0022792458f98abe502b8fdb, type: 2}
+  usingSkill: 0
   skills:
   - {fileID: 11400000, guid: 13c959b247815664fa3de6527c7da053, type: 2}
   - {fileID: 11400000, guid: ca67ebed9227d264ab66315a7b792410, type: 2}
@@ -5958,11 +5959,13 @@ MonoBehaviour:
     cc: 0
   isFriend: 0
   state: 0
+  target: {fileID: 0}
   contactLayer:
     serializedVersion: 2
     m_Bits: 256
-  basicAttack: {fileID: 11400000, guid: 94e90361989abf344af09bfc4ea660c5, type: 2}
+  usingSkill: 0
   skills:
+  - {fileID: 11400000, guid: 94e90361989abf344af09bfc4ea660c5, type: 2}
   - {fileID: 11400000, guid: 6a1da30191cee3e459e0aedfdb975f66, type: 2}
   - {fileID: 11400000, guid: b0b9fda0708c1c44abc8147e02e845a2, type: 2}
   skillRangeCircle: {fileID: 302137101}

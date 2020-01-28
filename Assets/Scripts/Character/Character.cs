@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum CharacterState { Idle, Move, Attack, Die }
+public enum CharacterState { Idle, Move, Attack, Skill, Die }
 
 public class Character : MonoBehaviour
 {
@@ -12,11 +12,11 @@ public class Character : MonoBehaviour
     public bool isFriend;
 
     [SerializeField] private CharacterState state;
-    private Character target = null;
+    [SerializeField] private Character target = null;
     [SerializeField] private LayerMask contactLayer;
 
     [Header("Skills")]
-    public Skill basicAttack;
+    public bool usingSkill;
     public List<Skill> skills;
 
     [Header("Skill UI")]
@@ -43,10 +43,10 @@ public class Character : MonoBehaviour
     private void InitialSetting()
     {
         status.ChangeStat(StatusType.CHP, status.MHP);
-        basicAttack.skillState = Skill.SkillState.Idle;
-        foreach (Skill skill in skills)
+        for(int i = 0; i < skills.Count; i++)
         {
-            skill.skillState = Skill.SkillState.Idle;
+            skills[i].skillState = Skill.SkillState.Idle;
+            skills[i].myNum = i;
         }
     }
 
@@ -54,7 +54,7 @@ public class Character : MonoBehaviour
     {
         target = null;
 
-        Collider[] colls = Physics.OverlapSphere(transform.position, 1, contactLayer);
+        Collider[] colls = Physics.OverlapSphere(transform.position, skills[0].range, contactLayer);
 
         float nearestDis = 9999999;
 
@@ -72,12 +72,13 @@ public class Character : MonoBehaviour
 
     private void BasicAttackActivate()
     {
-        //StartCoroutine(basicAttack.Activate(this, target));
+        Vector3 dir = target.transform.position - transform.position;
+        StartCoroutine(skills[0].Use(this, dir.normalized));
     }
 
     public void UseSkill(int skillNum)
     {
-        StartCoroutine(skills[skillNum].Use(this, skillNum));
+        StartCoroutine(skills[skillNum].Use(this));
     }
 
     public void FireProjectile(int num, Vector3 dir)
@@ -91,11 +92,15 @@ public class Character : MonoBehaviour
         {
             state = CharacterState.Die;
         }
-        else if (agent.remainingDistance > agent.stoppingDistance)
+        else if (usingSkill)
+        {
+            state = CharacterState.Skill;
+        }
+        else if (state != CharacterState.Skill && agent.remainingDistance > agent.stoppingDistance)
         {
             state = CharacterState.Move;
         }
-        else if (target)
+        else if ((state == CharacterState.Idle || state == CharacterState.Move) && target)
         {
             state = CharacterState.Attack;
         }
@@ -117,6 +122,8 @@ public class Character : MonoBehaviour
                 break;
             case CharacterState.Attack:
                 BasicAttackActivate();
+                break;
+            case CharacterState.Skill:
                 break;
             case CharacterState.Die:
                 Destroy(gameObject);

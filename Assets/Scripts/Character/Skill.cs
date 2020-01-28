@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum RangeType { Self, Around, Direction }
-public enum TargetType { Self, Friend, Enemy }
+public enum TargetType { Auto, Self, Friend, Enemy }
 public enum TargetNum { One, All }
 
 [CreateAssetMenu(fileName = "New Skill", menuName = "Skill/Skill")]
@@ -16,6 +16,7 @@ public class Skill : ScriptableObject
     public string skillName;
     public string description;
     public SkillState skillState;
+    public int myNum;
 
     [Header("Time")]
     public float preDelay;
@@ -31,7 +32,7 @@ public class Skill : ScriptableObject
     public TargetNum targetNum;
     public SkillEffect skillEffect;
 
-    public IEnumerator Use(Character caster, int num)
+    public IEnumerator Use(Character caster, Vector3? dir = null)
     {
         #region Check Cool Time
         if (skillState != SkillState.Idle) yield break;
@@ -40,7 +41,6 @@ public class Skill : ScriptableObject
         skillState = SkillState.Ready;
 
         #region Get Direction
-        Vector3? dir = null;
         if (speed == 0)
         {
             dir = Vector3.zero;
@@ -57,17 +57,21 @@ public class Skill : ScriptableObject
 
         skillState = SkillState.Fire;
 
+        Debug.Log("Use " + skillName + " to " + dir);
+
         #region Wait for Pre delay
+        if (targetType != TargetType.Auto) caster.usingSkill = true;
         yield return new WaitForSeconds(preDelay);
         #endregion
 
         #region 투사체 발사
         // GM에게 index 번째 캐릭터의 num번째 스킬을 dir 방향으로 사용한다고 알려준다.
-        GameManager.instance.FireProjectile(caster.index, num, dir.Value);
+        GameManager.instance.FireProjectile(caster.index, myNum, dir.Value);
         #endregion
 
         #region Wait for Post Delay
         yield return new WaitForSeconds(postDelay);
+        if (targetType != TargetType.Auto) caster.usingSkill = false;
         #endregion
 
         skillState = SkillState.CoolDown;

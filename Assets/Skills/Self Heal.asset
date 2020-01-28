@@ -15,6 +15,7 @@ MonoBehaviour:
   skillName: "\uC790\uD790"
   description: "\uC790\uC2E0\uC744 \uD790 \uD569\uB2C8\uB2E4."
   skillState: 0
+  myNum: 1
   preDelay: 0
   postDelay: 0
   coolDown: 5
@@ -22,6 +23,6 @@ MonoBehaviour:
   speed: 0
   range: 0
   size: {x: 0, y: 0, z: 0}
-  targetType: 0
+  targetType: 1
   targetNum: 0
   skillEffect: {fileID: 11400000, guid: cb0c86e30b5ede041a41373e3d349d15, type: 2}
