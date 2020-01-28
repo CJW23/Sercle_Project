@@ -184,7 +184,7 @@ public class NetworkManager : MonoBehaviour
                 headerData = serializer.GetSerializedData();
             }
 
-            byte[] packetData = packet.GetData();Debug.Log("DDD");
+            byte[] packetData = packet.GetData();
             byte[] data = new byte[headerData.Length + packetData.Length];
 
             int headerSize = Marshal.SizeOf(typeof(PacketHeader));

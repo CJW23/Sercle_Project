@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum StatusType { MHP, CHP, SPD, ATK, DEF, CRT, DDG }
+public enum StatusType { None, MHP, CHP, SPD, ATK, DEF, CRT, DDG }
+public enum HardCCType { None, Stun }
 
 [System.Serializable]
 public class Status
@@ -16,6 +17,7 @@ public class Status
     [SerializeField] private float ddg;
     [Tooltip("Critical Coefficient. 치명타 계수")]
     [SerializeField] private float cc;
+    [SerializeField] private HardCCType hardCC;
 
     public int MHP { get { return maxHp; } }
     public int CHP { get { return curHp; } }
@@ -25,6 +27,7 @@ public class Status
     public float CRT { get { return crt; } }
     public float DDG { get { return ddg; } }
     public float CC { get { return cc; } }
+    public HardCCType HardCC { get { return hardCC; } }
 
     /// <summary>
     /// 해당 유닛의 Status를 amount만큼 변경합니다. amount가 양수일 경우 더해지고 음수일 경우 뺍니다.
@@ -96,5 +99,10 @@ public class Status
                 Debug.LogError("Something is Wrong at Changing Status");
                 break;
         }
+    }
+
+    public void ApplyCC(HardCCType ccType)
+    {
+        hardCC = ccType;
     }
 }

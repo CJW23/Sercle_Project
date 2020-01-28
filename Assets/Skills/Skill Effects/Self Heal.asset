@@ -9,7 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d56d67a6e867e0b4c954b3a72c6215ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 993bfb0b062e00344b63c128b040e246, type: 3}
   m_Name: Self Heal
   m_EditorClassIdentifier: 
-  healCoefficient: 2
+  skillType: 1
+  coefficient: 2
+  ccType: 0
+  hardCCType: 0
+  statusType: 0
+  amount: 0
+  duration: 0

@@ -34,8 +34,6 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
-        agent.speed = status.SPD;
-
         FindNearestTarget();
         StateMachine();
     }
@@ -92,6 +90,12 @@ public class Character : MonoBehaviour
         {
             state = CharacterState.Die;
         }
+        else if (status.HardCC != HardCCType.None)
+        {
+            // CC기에 따른 행동
+            // 현재는 Stun 밖에 없음
+            agent.destination = transform.position;
+        }
         else if (usingSkill)
         {
             state = CharacterState.Skill;
@@ -117,8 +121,10 @@ public class Character : MonoBehaviour
         switch (state)
         {
             case CharacterState.Idle:
+                agent.speed = 0;
                 break;
             case CharacterState.Move:
+                agent.speed = status.SPD;
                 break;
             case CharacterState.Attack:
                 BasicAttackActivate();
@@ -167,15 +173,22 @@ public class Character : MonoBehaviour
     {
         foreach (EffectResult effect in effects)
         {
-            Debug.Log(name + "에게 " + effect.type.ToString() + "을 " + effect.amount + "만큼 변화시키는 효과가 " + effect.duration + "동안 적용!");
+            //Debug.Log(name + "에게 " + effect.statusType.ToString() + "을 " + effect.amount + "만큼 변화시키는 효과가 " + effect.duration + "동안 적용!");
             // 알아서 이 effect를 적용시키시오!
-            if (effect.duration == 0)
+            if (effect.hardCCType == HardCCType.None)
             {
-                status.ChangeStat(effect.type, effect.amount);
+                if (effect.duration == 0)
+                {
+                    status.ChangeStat(effect.statusType, effect.amount);
+                }
+                else
+                {
+                    StartCoroutine(TempEffect(effect));
+                }
             }
             else
             {
-                StartCoroutine(TempEffect(effect));
+                StartCoroutine(CCEffect(effect));
             }
         }
     }
@@ -198,11 +211,20 @@ public class Character : MonoBehaviour
     /// <returns></returns>
     private IEnumerator TempEffect(EffectResult effect)
     {
-        status.ChangeStat(effect.type, effect.amount);
+        status.ChangeStat(effect.statusType, effect.amount);
 
         yield return new WaitForSeconds(effect.duration);
 
-        status.ChangeStat(effect.type, -effect.amount);
+        status.ChangeStat(effect.statusType, -effect.amount);
+    }
+
+    private IEnumerator CCEffect(EffectResult effect)
+    {
+        status.ApplyCC(effect.hardCCType);
+
+        yield return new WaitForSeconds(effect.duration);
+
+        status.ApplyCC(HardCCType.None);
     }
 
     /// <summary>

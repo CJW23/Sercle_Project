@@ -182,8 +182,5 @@ public class GameManager : MonoBehaviour
     public void ApplySkill(Character target, List<EffectResult> effects)
     {
         target.Apply(effects);
-
-        int index = target.index;
-        // index에게 effects를 적용하도록 보내면 됨
     }
 }

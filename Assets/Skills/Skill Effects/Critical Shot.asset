@@ -9,7 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f13d70ed020dce4d8168a1728abc44f, type: 3}
+  m_Script: {fileID: 11500000, guid: 993bfb0b062e00344b63c128b040e246, type: 3}
   m_Name: Critical Shot
   m_EditorClassIdentifier: 
-  damageCoefficient: 3.5
+  skillType: 0
+  coefficient: 3.5
+  ccType: 0
+  hardCCType: 0
+  statusType: 0
+  amount: 0
+  duration: 0
