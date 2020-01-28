@@ -10,20 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbc63ca6b8a0e6743bf634c69760190f, type: 3}
-  m_Name: Area Stun
+  m_Name: Basic Attack_Dealer
   m_EditorClassIdentifier: 
-  skillName: "\uAD11\uC5ED \uC2A4\uD134"
-  description: "\uC8FC\uBCC0\uC758 \uC801\uB4E4\uC744 \uC2A4\uD134 \uC0C1\uD0DC\uB85C
-    \uB9CC\uB4ED\uB2C8\uB2E4."
+  skillName: "\uB51C \uAE30\uBCF8 \uACF5\uACA9"
+  description: "\uD3C9\uD0C0. 1.2*\uACF5\uACA9\uB825\uC73C\uB85C \uACF5\uACA9"
   skillState: 0
-  myNum: 1
+  myNum: 0
   preDelay: 0
   postDelay: 0
-  coolDown: 2
+  coolDown: 0.5
   proj: {fileID: 6332989940410738062, guid: f1ffe6c1057093e42a09702b86636b4e, type: 3}
-  speed: 0
-  range: 0
-  size: {x: 5, y: 1, z: 5}
-  targetType: 3
-  targetNum: 1
-  skillEffect: {fileID: 11400000, guid: 52db2dbaa1ac7a947bf2b1d5bf7b6286, type: 2}
+  speed: 10
+  range: 15
+  size: {x: 0.2, y: 0.2, z: 0.2}
+  targetType: 0
+  targetNum: 0
+  skillEffect: {fileID: 11400000, guid: d16d518b402c16c42aeb84a860faf685, type: 2}

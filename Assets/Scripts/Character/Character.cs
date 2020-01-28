@@ -59,6 +59,7 @@ public class Character : MonoBehaviour
         foreach (Collider coll in colls)
         {
             if (coll.gameObject == gameObject) continue;
+            if (coll.gameObject.GetComponent<Character>().isFriend) continue;
 
             if (target == null || Vector3.Distance(coll.transform.position, transform.position) < nearestDis)
             {
